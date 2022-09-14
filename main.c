@@ -15,7 +15,7 @@ int	ft_check_type(int ac, char **av)
 				return (1);
 			i++;
 		}
-		ac--;
+		ac--; 
 	}
 	return (0);
 	
