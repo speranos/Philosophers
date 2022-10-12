@@ -2,7 +2,7 @@
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c
+SRCS = main.c philo_utils.c
 
 all : $(NAME)
 

@@ -3,5 +3,19 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+#include <pthread.h>
+
+typedef struct philo_data
+{
+	pthread_t	*philo;
+	int			ph_num;
+	int			to_die;
+	int			to_eat;
+	int			to_sleep;
+	int			eat;
+
+}   data;
+void	ft_ph_creat(data *philo_data, char **av, int ac);
+int	ft_atoi(char *str);
 
 #endif

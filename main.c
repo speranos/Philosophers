@@ -60,9 +60,40 @@ int	ft_arg_check(int ac, char **av)
 	return (0);
 }
 
+void	ft_add(data *philo_data, char **av, int ac)
+{
+	philo_data->ph_num = ft_atoi(av[1]);
+	philo_data->to_die = ft_atoi(av[2]);
+	philo_data->to_eat = ft_atoi(av[3]);
+	philo_data->to_sleep = ft_atoi(av[4]);
+	if(ac == 6)
+		philo_data->eat = ft_atoi(av[5]);
+}
+
+void	ft_ph_creat(data *philo_data, char **av, int ac)
+{
+	int	i;
+	int a;
+
+	i = 0;
+	a = 0;
+	ft_add(philo_data, av, ac);
+	while(i < philo_data->ph_num)
+	{
+		pthread_create(philo_data->philo, )
+		i++;
+	}
+
+	
+}
+
 int	main(int ac, char **av)
 {
+	data	ph_data;
+
 	if (ft_arg_check(ac, av) == 1)
 		return (0);
+	else
+		ft_ph_creat(&ph_data, av, ac);
 	printf ("all good\n");
 }
