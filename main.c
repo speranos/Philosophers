@@ -1,5 +1,7 @@
 #include "philo.h"
 
+pthread_mutex_t	mutex;
+
 int	ft_check_type(int ac, char **av)
 {
 	int	i;
@@ -60,40 +62,86 @@ int	ft_arg_check(int ac, char **av)
 	return (0);
 }
 
+void *act_philo(void *philo_data)
+{
+
+	data	*ph_data;
+
+	ph_data = (data *)philo_data;
+
+	
+		pthread_mutex_lock(&mutex);
+		printf ("philo %p id eating\n", ph_data[ph_data->creat].philo);
+		printf("philo num = %d\n", ph_data[ph_data->creat].id);
+		pthread_mutex_unlock(&mutex);
+		usleep(ph_data->to_eat);
+		//pthread_mutex_unlock(&mutex);
+	
+
+
+	return(0);
+}
+
 void	ft_add(data *philo_data, char **av, int ac)
 {
-	philo_data->ph_num = ft_atoi(av[1]);
-	philo_data->to_die = ft_atoi(av[2]);
-	philo_data->to_eat = ft_atoi(av[3]);
-	philo_data->to_sleep = ft_atoi(av[4]);
-	if(ac == 6)
-		philo_data->eat = ft_atoi(av[5]);
+	int i;
+
+	i = 0;
+	while(i < ft_atoi(av[1]))
+	{
+		philo_data[i].ph_num = ft_atoi(av[1]);
+		philo_data[i].to_die = ft_atoi(av[2]);
+		philo_data[i].to_eat = ft_atoi(av[3]);
+		philo_data[i].to_sleep = ft_atoi(av[4]);
+		philo_data[i].id = i;
+		if(ac == 6)
+			philo_data[i].eat = ft_atoi(av[5]);
+		i++;
+	}
+	
 }
 
 void	ft_ph_creat(data *philo_data, char **av, int ac)
 {
 	int	i;
 	int a;
+	int x;
 
-	i = 0;
+	philo_data->creat = 0;
 	a = 0;
+	x = 0;
+	i = 0;
+	pthread_mutex_init(&mutex, NULL);
 	ft_add(philo_data, av, ac);
-	while(i < philo_data->ph_num)
+	while(philo_data->creat < philo_data->ph_num)
 	{
-		pthread_create(philo_data->philo, )
+		philo_data[i].philo = malloc(sizeof(pthread_t));
+		pthread_create(philo_data[i].philo, NULL, act_philo, philo_data);
+		usleep(100);
+		philo_data->creat++;
 		i++;
 	}
+	while (1);
+	i = 0;
+	while(i < philo_data->ph_num)
+	{
+		pthread_join(*philo_data[i].philo, NULL);
+		i++;
+	}
+
+
 
 	
 }
 
 int	main(int ac, char **av)
 {
-	data	ph_data;
+	data	*ph_data;
 
+	ph_data = malloc(sizeof(data) * ft_atoi(av[1]));
 	if (ft_arg_check(ac, av) == 1)
 		return (0);
 	else
-		ft_ph_creat(&ph_data, av, ac);
+		ft_ph_creat(ph_data, av, ac);
 	printf ("all good\n");
 }

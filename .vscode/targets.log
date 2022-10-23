@@ -6,9 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Wed Oct 12 23:07:10 2022
+# Make data base, printed on Sun Oct 23 05:33:25 2022
 
 # Variables
 
@@ -37,7 +36,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.KMJ2hIpnPy/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.Akffhq7ARf/Render
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
@@ -47,7 +46,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.cOWaiblVTg/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.LmIk0TQlyV/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -61,11 +60,11 @@ HOME = /Users/aoueldma
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/aoueldma/Library/Application Support/Code/CachedData/74b1f979648cc44d385a2286793c226e611f59e7
+VSCODE_CODE_CACHE_PATH = /Users/aoueldma/Library/Application Support/Code/CachedData/d045a5eda657f4d7b676dedbfa7aab8207f8a075
 # environment
 LOGNAME = aoueldma
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 ZSH = /Users/aoueldma/.oh-my-zsh
 # environment
@@ -105,7 +104,7 @@ TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n0000jdw0004bg/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/aoueldma/Library/Application Support/Code/1.71.2-main.sock
+VSCODE_IPC_HOOK = /Users/aoueldma/Library/Application Support/Code/1.72.2-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -115,7 +114,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.1228
+XPC_SERVICE_NAME = com.microsoft.VSCode.5172
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -141,7 +140,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 7556
+VSCODE_PID = 71196
 # variable set hash-table stats:
 # Load=65/1024=6%, Rehash=0, Collisions=1/98=1%
 
@@ -182,7 +181,7 @@ all: philo
 philo: main.c philo_utils.c
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `'
-#  Last modified 2022-10-09 01:29:05
+#  Last modified 2022-10-23 05:32:09
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -211,7 +210,7 @@ philo: main.c philo_utils.c
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-09 01:30:03
+#  Last modified 2022-10-23 05:33:00
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -226,7 +225,7 @@ main.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-09 00:49:56
+#  Last modified 2022-10-23 03:01:22
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -274,6 +273,6 @@ clean:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Oct 12 23:07:10 2022
+# Finished Make data base on Sun Oct 23 05:33:25 2022
 
  
