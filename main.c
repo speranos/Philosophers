@@ -1,7 +1,5 @@
 #include "philo.h"
 
-pthread_mutex_t	mutex;
-
 int	ft_check_type(int ac, char **av)
 {
 	int	i;
@@ -68,17 +66,18 @@ void *act_philo(void *philo_data)
 	data	*ph_data;
 
 	ph_data = (data *)philo_data;
+while(1)
+{
+	pthread_mutex_lock(&ph_data[ph_data->creat].mutex);
+	pthread_mutex_lock(&ph_data[ph_data->creat % ph_data->ph_num].mutex);
 
-	
-		pthread_mutex_lock(&mutex);
-		printf ("philo %p id eating\n", ph_data[ph_data->creat].philo);
-		printf("philo num = %d\n", ph_data[ph_data->creat].id);
-		pthread_mutex_unlock(&mutex);
-		usleep(ph_data->to_eat);
-		//pthread_mutex_unlock(&mutex);
-	
-
-
+	printf ("philo %p id eating\n", ph_data[ph_data->creat].philo);
+	printf("philo num = %d\n", ph_data[ph_data->creat].id);
+	pthread_mutex_unlock(&ph_data[ph_data->creat].mutex);
+	pthread_mutex_unlock(&ph_data[ph_data->creat % ph_data->ph_num].mutex);
+	usleep(ph_data->to_eat);
+	printf("ma good ma ta 9alwa\n");
+}
 	return(0);
 }
 
@@ -107,13 +106,19 @@ void	ft_ph_creat(data *philo_data, char **av, int ac)
 	int a;
 	int x;
 
-	philo_data->creat = 0;
+	philo_data->creat = 1;
 	a = 0;
 	x = 0;
 	i = 0;
-	pthread_mutex_init(&mutex, NULL);
 	ft_add(philo_data, av, ac);
-	while(philo_data->creat < philo_data->ph_num)
+	while (i < philo_data->ph_num)
+	{
+		pthread_mutex_init(&philo_data[i].mutex, NULL);
+		philo_data[i].mutex = malloc(sizeof(pthread_mutex_t));
+		i++;
+	}
+	i = 0;
+	while(i < philo_data->ph_num)
 	{
 		philo_data[i].philo = malloc(sizeof(pthread_t));
 		pthread_create(philo_data[i].philo, NULL, act_philo, philo_data);
@@ -121,7 +126,7 @@ void	ft_ph_creat(data *philo_data, char **av, int ac)
 		philo_data->creat++;
 		i++;
 	}
-	while (1);
+
 	i = 0;
 	while(i < philo_data->ph_num)
 	{
