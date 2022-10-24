@@ -62,22 +62,32 @@ int	ft_arg_check(int ac, char **av)
 
 void *act_philo(void *philo_data)
 {
-
+	//int	i;
 	data	*ph_data;
 
 	ph_data = (data *)philo_data;
-while(1)
-{
-	pthread_mutex_lock(&ph_data[ph_data->creat].mutex);
-	pthread_mutex_lock(&ph_data[ph_data->creat % ph_data->ph_num].mutex);
+	//i = 0;
+// while(1)
+// {
+	
+	//printf("creat 9bal ====== %d\n", ph_data->creat);
+	pthread_mutex_lock(&ph_data->mutex);
+	//pthread_mutex_lock(&ph_data[(ph_data->creat % ph_data->ph_num) + 1].mutex);
+	printf("philo num = %d ===> \n", ph_data->id);
+	printf ("philo %p is eating\n", ph_data->philo);
 
-	printf ("philo %p id eating\n", ph_data[ph_data->creat].philo);
-	printf("philo num = %d\n", ph_data[ph_data->creat].id);
-	pthread_mutex_unlock(&ph_data[ph_data->creat].mutex);
-	pthread_mutex_unlock(&ph_data[ph_data->creat % ph_data->ph_num].mutex);
+	pthread_mutex_unlock(&ph_data->mutex);
+	//pthread_mutex_unlock(&ph_data[(ph_data->creat % ph_data->ph_num) + 1].mutex);
 	usleep(ph_data->to_eat);
-	printf("ma good ma ta 9alwa\n");
-}
+	// if(ph_data->creat == ph_data->ph_num - 1)
+	// {
+	// 	ph_data->creat = 0;
+	// 	ph_data->id = 1;
+	// }
+	//printf("creat after ====== %d\n", ph_data->creat);
+	//i++;
+	//printf("ma good ma ta 9alwa\n");
+// }
 	return(0);
 }
 
@@ -92,7 +102,7 @@ void	ft_add(data *philo_data, char **av, int ac)
 		philo_data[i].to_die = ft_atoi(av[2]);
 		philo_data[i].to_eat = ft_atoi(av[3]);
 		philo_data[i].to_sleep = ft_atoi(av[4]);
-		philo_data[i].id = i;
+		philo_data[i].id = i + 1;
 		if(ac == 6)
 			philo_data[i].eat = ft_atoi(av[5]);
 		i++;
@@ -106,22 +116,22 @@ void	ft_ph_creat(data *philo_data, char **av, int ac)
 	int a;
 	int x;
 
-	philo_data->creat = 1;
+	//philo_data->creat = 1;
 	a = 0;
 	x = 0;
 	i = 0;
 	ft_add(philo_data, av, ac);
-	while (i < philo_data->ph_num)
+	while (i <= philo_data->ph_num)
 	{
 		pthread_mutex_init(&philo_data[i].mutex, NULL);
-		philo_data[i].mutex = malloc(sizeof(pthread_mutex_t));
+		//philo_data[i].mutex = malloc(sizeof(pthread_mutex_t));
 		i++;
 	}
 	i = 0;
 	while(i < philo_data->ph_num)
 	{
-		philo_data[i].philo = malloc(sizeof(pthread_t));
-		pthread_create(philo_data[i].philo, NULL, act_philo, philo_data);
+		// philo_data[i].philo = malloc(sizeof(pthread_t));
+		pthread_create(&philo_data[i].philo, NULL, act_philo, &philo_data[i]);
 		usleep(100);
 		philo_data->creat++;
 		i++;
@@ -130,7 +140,7 @@ void	ft_ph_creat(data *philo_data, char **av, int ac)
 	i = 0;
 	while(i < philo_data->ph_num)
 	{
-		pthread_join(*philo_data[i].philo, NULL);
+		pthread_join(philo_data[i].philo, NULL);
 		i++;
 	}
 

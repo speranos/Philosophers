@@ -10,7 +10,7 @@
 
 typedef struct philo_data
 {
-	pthread_t	*philo;
+	pthread_t	philo;
 	pthread_mutex_t mutex;
 	int			ph_num;
 	int			to_die;
