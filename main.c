@@ -67,27 +67,20 @@ void *act_philo(void *philo_data)
 
 	ph_data = (data *)philo_data;
 	//i = 0;
-// while(1)
-// {
+while(1)
+{
 	
 	//printf("creat 9bal ====== %d\n", ph_data->creat);
 	pthread_mutex_lock(&ph_data->mutex);
-	//pthread_mutex_lock(&ph_data[(ph_data->creat % ph_data->ph_num) + 1].mutex);
-	printf("philo num = %d ===> \n", ph_data->id);
-	printf ("philo %p is eating\n", ph_data->philo);
-
-	pthread_mutex_unlock(&ph_data->mutex);
-	//pthread_mutex_unlock(&ph_data[(ph_data->creat % ph_data->ph_num) + 1].mutex);
+	pthread_mutex_lock(&ph_data[(ph_data->id % ph_data->ph_num) + 1].mutex);
+	printf("philo num ===> %d  ||  id ===>  %p  is eating\n", ph_data->id, ph_data->philo);
 	usleep(ph_data->to_eat);
-	// if(ph_data->creat == ph_data->ph_num - 1)
-	// {
-	// 	ph_data->creat = 0;
-	// 	ph_data->id = 1;
-	// }
+	pthread_mutex_unlock(&ph_data->mutex);
+	pthread_mutex_unlock(&ph_data[(ph_data->id % ph_data->ph_num) + 1].mutex);
 	//printf("creat after ====== %d\n", ph_data->creat);
 	//i++;
 	//printf("ma good ma ta 9alwa\n");
-// }
+}
 	return(0);
 }
 
