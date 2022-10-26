@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Mon Oct 24 07:18:08 2022
+# Make data base, printed on Wed Oct 26 01:05:34 2022
 
 # Variables
 
@@ -36,7 +36,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.5GPn58vw5E/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.GG8uANKxfa/Render
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
@@ -46,7 +46,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.4lLoTcFjC9/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.fZfeOSBV8r/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -114,7 +114,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000005.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -132,7 +132,7 @@ PAGER = less
 # environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 18703
+SECURITYSESSIONID = 186a8
 # automatic
 ^F = $(notdir $^)
 # default
@@ -144,7 +144,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 70620
+VSCODE_PID = 48229
 # variable set hash-table stats:
 # Load=67/1024=7%, Rehash=0, Collisions=1/94=1%
 
@@ -184,7 +184,7 @@ all: philo
 
 philo: main.c philo_utils.c
 #  Implicit rule search has not been done.
-#  Last modified 2022-10-24 04:40:53
+#  Last modified 2022-10-25 23:48:03
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -197,7 +197,7 @@ philo: main.c philo_utils.c
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-24 04:40:49
+#  Last modified 2022-10-25 23:47:59
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -260,6 +260,6 @@ clean:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Oct 24 07:18:08 2022
+# Finished Make data base on Wed Oct 26 01:05:34 2022
 
  
