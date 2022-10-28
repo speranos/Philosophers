@@ -1,6 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/aoueldma/Desktop/philo2'
+make: Entering directory `/Users/aoueldma/Desktop/4444444'
 cc -Wall -Wextra -Werror main.c philo_utils.c -o philo
 echo YOUR ARE READY TO GO !!!
-make: Leaving directory `/Users/aoueldma/Desktop/philo2'
+make: Leaving directory `/Users/aoueldma/Desktop/4444444'
  

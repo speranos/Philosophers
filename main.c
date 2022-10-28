@@ -60,25 +60,25 @@ int	ft_arg_check(int ac, char **av)
 	return (0);
 }
 
-void	ft_usleep(unsigned int tms)
-{
-	 long	old_time;
-
-	old_time = gettime();
-	usleep(tms - 30000);
-	while (gettime() < old_time + tms / 1000)
-		;
-}
-
-// void	ft_usleep(int ms)
+// void	ft_usleep(unsigned int tms)
 // {
-// 	long	time;
+// 	 long	old_time;
 
-// 	time = gettime();
-
-// 	while(gettime() < (time + ms))
-// 		usleep(100);
+// 	old_time = gettime();
+// 	usleep(tms - 30000);
+// 	while (gettime() < old_time + tms / 1000)
+// 		;
 // }
+
+void	ft_usleep(int ms)
+{
+	long	time;
+
+	time = gettime();
+
+	while(gettime() < (time + ms))
+		usleep(100);
+}
 
 long gettime(void)
 {
@@ -98,38 +98,47 @@ void print_msg (data *ph_data , char c)
 		printf("{%ld} philo %d is sleeping\n", gettime() - ph_data->start_time, ph_data->id );
 	if (c == 't')
 		printf("{%ld} philo %d is thinking\n", gettime() - ph_data->start_time, ph_data->id );
-	if (c == 'f')
-		printf("{%ld} philo %d has taken a fork\n", gettime() - ph_data->start_time, ph_data->id );
+	if (c == 'r')
+		printf("{%ld} philo %d has taken his fork\n", gettime() - ph_data->start_time, ph_data->id );
+	if(c == 'l')
+		printf("{%ld} philo %d has taken a fork for %d \n", (gettime() - ph_data->start_time), ph_data->id, ph_data->id  % ph_data->ph_num + 1);
+	if(c == 'k')
+		printf("{%ld} philo %d Dead\n", (gettime() - ph_data->start_time), ph_data->id);
 	pthread_mutex_unlock(&ph_data->print.print);
 }
 
-void *act_philo(void *philo_data)
+void *	act_philo(void *philo_data)
 {
 	data	*ph_data;
+	// int next_fork;
 	// pthread_mutex_t print;
 
 	// pthread_mutex_init(&print, NULL);
 	ph_data = (data *)philo_data;
 	
-while(1)
-{
-	int next_fork;
-	
-		
-	next_fork = ph_data->id  % ph_data->ph_num + 1;	
-	pthread_mutex_lock(&ph_data->fork);
-	pthread_mutex_lock(&ph_data[next_fork - 1 ].fork);
-	print_msg(ph_data, 'f');
-	print_msg(ph_data, 'f');
-	print_msg(ph_data, 'e');
-	ft_usleep(1000 * ph_data->to_eat);
-	pthread_mutex_unlock(&ph_data->fork);
-	pthread_mutex_unlock(&ph_data[next_fork - 1 ].fork);
-	print_msg(ph_data, 's');
-	ft_usleep(1000 * ph_data->to_sleep);
-	print_msg(ph_data, 't');
-	
- }
+	while(1)
+	{
+		pthread_mutex_lock(&ph_data->fork[ph_data->left]);
+		//printf("fork id  ====== %p\n", &ph_data->fork);
+		print_msg(ph_data, 'r');
+		pthread_mutex_lock(&ph_data->fork[ph_data->right]);
+		//printf("Next fork id ==== %p num === %d\n", ph_data[ph_data->id % ph_data->ph_num].fork, ph_data->id % ph_data->ph_num + 1);
+		print_msg(ph_data, 'l');
+		print_msg(ph_data, 'e');
+		ph_data->last_meal = gettime() - ph_data->start_time;
+		ft_usleep(ph_data->to_eat);
+		pthread_mutex_unlock(&ph_data->fork[ph_data->left]);
+		pthread_mutex_unlock(&ph_data->fork[ph_data->right]);
+		ft_usleep(ph_data->to_sleep);
+		print_msg(ph_data, 's'); 
+		print_msg(ph_data, 't');
+		// if((gettime() - ph_data->start_time) - ph_data->last_meal > ph_data->to_die)
+		// {
+		// 	print_msg(ph_data, 'k');
+		// 	pthread_detach(ph_data->philo);
+		// 	exit(0);
+		// }
+ 	}
 	return(0);
 }
 
@@ -147,10 +156,15 @@ void	ft_add(data *philo_data, char **av, int ac)
 		philo_data[i].to_sleep = ft_atoi(av[4]);
 		philo_data[i].id = i + 1;
 		if(ac == 6)
+		{
 			philo_data[i].eat = ft_atoi(av[5]);
+			philo_data[i].eat_or_not = 1;
+		}
+		philo_data[i].left = i;
+		philo_data[i].right = ( i + 1) % philo_data->ph_num;
 		i++;
 	}
-	printf("id ======== %d\n", philo_data[i - 1].id);
+	//printf("id ======== %d\n", philo_data[i - 1].id);
 	//printf
 	
 }
@@ -159,23 +173,34 @@ void	ft_ph_creat(data *philo_data, char **av, int ac)
 {
 	int	i;
 	// int j;
+	pthread_mutex_t	*fk;
 
 	//philo_data->creat = 1;
 	// j = 1;
 	i = 0;
 	ft_add(philo_data, av, ac);
-	pthread_mutex_init(&philo_data->print.print , NULL);
+	fk = malloc(sizeof(pthread_mutex_t) * philo_data->ph_num);
 	while (i < philo_data->ph_num)
 	{
-		// pthread_mutex_init(&philo_data[i].mutex, NULL);
-		pthread_mutex_init(&philo_data[i].fork, NULL);
+		pthread_mutex_init(&fk[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(&philo_data->print.print , NULL);
+	i = 0;
+	while (i < philo_data->ph_num)
+	{
+		philo_data[i].fork = fk;
+		// pthread_mutex_init(&philo_data[i].fork, NULL);
+		// printf("philo %d  fork id  ====== %p\n", i + 1, &philo_data[i].fork);
+		i++;
+	}
+	//exit(0);
 	i = 0;
 	while(i < philo_data->ph_num)
 	{
 		pthread_create(&philo_data[i].philo, NULL, act_philo, &philo_data[i]);
-		// usleep(100);
+		//usleep(60);
+		// i++;
 		//philo_data->creat++;
 		i = i+2;
 	}
@@ -183,8 +208,8 @@ void	ft_ph_creat(data *philo_data, char **av, int ac)
 	i = 1;
 	while(i < philo_data->ph_num)
 	{
-		pthread_create(&philo_data[i].philo, NULL, act_philo, &philo_data[i]);
-		// usleep(100);
+		pthread_create(&philo_data[i].philo, NULL, &act_philo, &philo_data[i]);
+		//usleep(60);
 		//philo_data->creat++;
 		i = i+2;
 	}
@@ -200,14 +225,23 @@ int	main(int ac, char **av)
 {
 	data	*ph_data;
 
-	ph_data = malloc(sizeof(data) * ft_atoi(av[1]));
 	if (ft_arg_check(ac, av) == 1)
 		return (0);
 	else
+	{
+		ph_data = malloc(sizeof(data) * ft_atoi(av[1]));
 		ft_ph_creat(ph_data, av, ac);
+	}
 	while(1)
 	{
+		if((gettime() - ph_data->start_time) - ph_data->last_meal > ph_data->to_die)
+		{
 
+			print_msg(ph_data, 'k');
+			pthread_detach(ph_data->philo);
+			//printf("{%ld} philo %d Dead\n", (gettime() - ph_data->start_time), ph_data->id);
+			exit(0);
+		}
 	}
 
 	printf ("all good\n");
