@@ -11,14 +11,13 @@ int	ft_check_type(int ac, char **av)
 		i = 0;
 		while (av[ac][i])
 		{
-			if(av[ac][i] < 48 || av[ac][i] >  57)
+			if (av[ac][i] < 48 || av[ac][i] > 57)
 				return (1);
 			i++;
 		}
-		ac--; 
+		ac--;
 	}
 	return (0);
-	
 }
 
 int	ft_check_value(int ac, char **av)
@@ -47,7 +46,7 @@ int	ft_arg_check(int ac, char **av)
 		printf("args...error !!!");
 		return (1);
 	}
-	if (ft_check_type(ac,av))
+	if (ft_check_type(ac, av))
 	{
 		printf ("error...only number !!!");
 		return (1);

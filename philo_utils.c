@@ -45,11 +45,11 @@ long	gettime(void)
 	return (ret);
 }
 
-void	print_msg(data *ph_data, char c)
+void	print_msg(t_data *ph_data, char c)
 {
 	long	time;
 
-	pthread_mutex_lock(&ph_data->print.print);
+	pthread_mutex_lock(ph_data->print.print);
 	time = gettime() - ph_data->start_time;
 	if (c == 'e')
 		printf("%ld philo %d is eating\n", time, ph_data->id);
@@ -63,31 +63,31 @@ void	print_msg(data *ph_data, char c)
 		printf("%ld philo %d has taken a fork\n", time, ph_data->id);
 	if (c == 'k')
 		printf("%ld philo %d Dead\n", time, ph_data->id);
-	pthread_mutex_unlock(&ph_data->print.print);
+	pthread_mutex_unlock(ph_data->print.print);
 }
 
-int	check_things(data *ph_data)
+void	check_things(t_data *ph_data)
 {
-	int		i;
 	long	time;
 
-	i = 0;
-	while (i < ph_data->ph_num)
+	while (1)
 	{
-		pthread_mutex_lock(&ph_data->print.supra);
+		pthread_mutex_lock(ph_data->print.supra);
 		time = (gettime() - ph_data->start_time) - ph_data->last_meal;
-		pthread_mutex_unlock(&ph_data->print.supra);
 		if (time > ph_data->to_die)
 		{
-			print_msg(ph_data, 'k');
-			return (1);
+			pthread_mutex_lock(ph_data->print.print);
+			time = gettime() - ph_data->start_time;
+			printf("%ld philo %d Dead\n", time, ph_data->id);
+			return ;
 		}
+		pthread_mutex_unlock(ph_data->print.supra);
 		if (ph_data->eat_or_not == 1)
 		{
+			pthread_mutex_lock(ph_data->print.lock_eat);
 			if (ph_data->is_eating == 0)
-				return (1);
-			i++;
+				return ;
+			pthread_mutex_unlock(ph_data->print.lock_eat);
 		}
 	}
-	return (0);
 }
