@@ -2,8 +2,7 @@
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
-SRCS = main.c philo_utils.c parssing.c ft_init.c
-
+SRCS = *.c
 all : $(NAME)
 
 $(NAME) : $(SRCS)
